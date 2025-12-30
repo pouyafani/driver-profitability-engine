@@ -19,6 +19,8 @@ class Trip:
             raise ValueError("Trip type must be a TripType object")
         if wait_time < 0:
             raise ValueError("Wait time cannot be negative")
+        if bonus < 0:
+            raise ValueError("Bonus cannot be negative")
         
         self.trip_id = trip_id
         self.revenue = revenue
