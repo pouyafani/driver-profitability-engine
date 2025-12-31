@@ -1,0 +1,13 @@
+We are writing a Golden Test.
+
+Target layer: Application
+Use Case: CreateDriver
+
+Follow Golden Test .cursorrules strictly.
+
+Write a happy-path Golden Test using:
+- FakeUnitOfWork
+- In-memory repository
+- No mocks
+- No ORM
+- No framework

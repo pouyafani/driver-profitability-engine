@@ -1,0 +1,34 @@
+Architecture standard: Clean Architecture + DDD-Lite
+
+Layers (strict order):
+1. Domain
+2. Application
+3. Infrastructure
+4. Interfaces (API, CLI, UI)
+
+Rules:
+- Dependencies only point inward
+- Domain layer has ZERO framework imports
+- Application layer depends only on Domain
+- Infrastructure implements interfaces defined in Application or Domain
+
+Domain rules:
+- Entities contain behavior, not just data
+- Value Objects are immutable
+- Aggregates enforce invariants
+- Domain Services only when behavior does not belong to an Entity
+
+Application rules:
+- Use Cases are verbs (e.g. CalculateDriverProfit)
+- No business rules in controllers
+- No persistence logic
+- Use Unit of Work explicitly
+
+Infrastructure rules:
+- ORM models are not Domain entities
+- Mapping layer is mandatory
+- Repositories are adapters, not abstractions of the database
+
+Bounded Context:
+- One domain = one bounded context
+- No shared database schemas across contexts

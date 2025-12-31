@@ -1,0 +1,34 @@
+Testing strategy: Industrial Test Pyramid
+
+Mandatory layers:
+- Unit tests (Domain & Application)
+- Integration tests (Infrastructure)
+- Contract tests (APIs)
+- Minimal E2E tests
+
+Rules:
+- Domain logic must be 90%+ unit tested
+- Tests must be deterministic
+- No shared mutable test state
+- Tests must not depend on test order
+
+Unit tests:
+- No database
+- No network
+- No filesystem
+
+Integration tests:
+- Explicit setup and teardown
+- Real adapters, isolated environment
+
+Naming:
+- test_<unit>_<behavior>_<expected_outcome>
+
+Testing philosophy:
+- Test behavior, not implementation
+- Fail fast, fail loud
+- One assertion per logical behavior
+
+Never:
+- Skip tests for deadlines
+- Mock the system under test

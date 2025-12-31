@@ -1,0 +1,37 @@
+Security posture: Zero Trust by default
+
+Rules:
+- Never trust user input
+- Validate at boundaries
+- Sanitize before persistence
+- Encode before output
+
+Secrets:
+- Never hardcode secrets
+- Use environment variables or secret managers
+- No secrets in logs
+
+Authentication & Authorization:
+- Authentication != Authorization
+- Authorization must be explicit
+- Role checks belong in Application layer
+
+Data protection:
+- PII must be explicitly marked
+- Encrypt sensitive fields at rest when required
+- Avoid logging sensitive data
+
+Error handling:
+- No stack traces exposed to users
+- Domain errors are explicit and meaningful
+- Infrastructure errors are wrapped
+
+Dependencies:
+- Prefer well-maintained libraries
+- Pin versions
+- Monitor CVEs
+
+Never:
+- Ignore security for speed
+- Log credentials
+- Trust frontend validation

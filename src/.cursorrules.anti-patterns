@@ -1,0 +1,28 @@
+Forbidden anti-patterns:
+
+Architecture:
+- Anemic Domain Model
+- God Service
+- Shared mutable state
+- Circular dependencies
+
+Code:
+- Boolean flags controlling behavior
+- Large if/else chains instead of polymorphism
+- Magic numbers or strings
+- Copy-paste logic
+
+DDD violations:
+- Repositories returning ORM entities
+- Domain depending on infrastructure
+- Business logic in controllers
+
+Process:
+- Premature abstraction
+- Framework-driven design
+- Over-engineering MVP paths
+
+If any anti-pattern appears:
+- Stop
+- Refactor
+- Explain why the change improves the system
