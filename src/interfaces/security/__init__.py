@@ -1,0 +1,2 @@
+"""Security interfaces - Authentication middleware."""
+

@@ -1,37 +1,110 @@
-Security posture: Zero Trust by default
+# FILE: .cursorrules.security
+# SCOPE: global
+# LEVEL: Ultimate – Industrial – Software Factory
+# MERGE STRATEGY: override_with_ultimate_priority
 
-Rules:
-- Never trust user input
-- Validate at boundaries
-- Sanitize before persistence
-- Encode before output
+version: 1.0
+scope: global
+severity: error
 
-Secrets:
-- Never hardcode secrets
-- Use environment variables or secret managers
-- No secrets in logs
+security_posture: zero_trust_by_default
 
-Authentication & Authorization:
-- Authentication != Authorization
-- Authorization must be explicit
-- Role checks belong in Application layer
+principles:
+  - zero_trust
+  - fail_closed
+  - security_by_design
+  - no_implicit_permissions
+  - assume_breach
 
-Data protection:
-- PII must be explicitly marked
-- Encrypt sensitive fields at rest when required
-- Avoid logging sensitive data
+rules:
 
-Error handling:
-- No stack traces exposed to users
-- Domain errors are explicit and meaningful
-- Infrastructure errors are wrapped
+  input_validation:
+    enforce: true
+    posture: never_trust_input
+    requirements:
+      - all_external_inputs_must_have_schema
+      - validate_at_boundaries_only
+      - whitelist_validation_only
+      - reject_unknown_fields
+      - sanitize_before_persistence
+      - encode_before_output
+    forbidden:
+      - raw_dict_usage
+      - unchecked_user_input
+      - dynamic_eval
+      - trusting_frontend_validation
 
-Dependencies:
-- Prefer well-maintained libraries
-- Pin versions
-- Monitor CVEs
+  authentication:
+    enforce: true
+    rules:
+      - authentication_is_not_authorization
+      - auth_logic_only_in_interfaces
+      - no_token_parsing_in_domain
+      - no_auth_state_in_application
+      - tokens_must_be_short_lived
 
-Never:
-- Ignore security for speed
-- Log credentials
-- Trust frontend validation
+  authorization:
+    enforce: true
+    rules:
+      - authorization_must_be_explicit
+      - authorization_required_for_all_state_changes
+      - authorization_in_application_layer_only
+      - role_checks_not_in_controllers
+      - deny_by_default
+      - explicit_policy_check_required
+
+  secrets:
+    enforce: true
+    storage:
+      - environment_variables
+      - approved_secret_managers
+    forbidden:
+      - hardcoded_secrets
+      - secrets_in_tests
+      - secrets_in_logs
+      - secrets_in_env_example
+      - default_credentials
+    detection:
+      - api_key_patterns
+      - jwt_patterns
+      - private_key_patterns
+
+  data_protection:
+    enforce: true
+    rules:
+      - pii_must_be_explicitly_marked
+      - encrypt_sensitive_fields_at_rest_when_required
+      - avoid_logging_sensitive_data
+
+  error_handling:
+    enforce: true
+    rules:
+      - no_stack_traces_exposed_to_users
+      - domain_errors_must_be_explicit
+      - infrastructure_errors_must_be_wrapped
+      - fail_with_generic_external_messages
+
+  dependencies:
+    enforce: true
+    rules:
+      - prefer_well_maintained_libraries
+      - pin_dependency_versions
+      - monitor_known_cves
+
+  owasp:
+    enforce: true
+    covered:
+      - broken_access_control
+      - injection
+      - auth_failures
+      - security_misconfiguration
+      - cryptographic_failures
+      - logging_monitoring_failures
+
+never:
+  - ignore_security_for_speed
+  - log_credentials
+  - trust_frontend_validation
+
+actions:
+  on_violation: block_commit
